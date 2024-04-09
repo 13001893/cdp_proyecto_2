@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS usuario (
 	direccion VARCHAR(70),
 	telefono VARCHAR(20),
 	email VARCHAR(50),
-	clave VARBINARY(MAX),
+	clave bit varying(10),
 	estado BIT,
 
 CONSTRAINT fk_idrol
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS venta (
 	tipo_comprobante VARCHAR(20),
 	serie_comprobante VARCHAR(7),
 	num_comprobante VARCHAR(10),
-	fecha DATETIME,
+	fecha TIMESTAMP,
 	impuesto DECIMAL(4, 2),
 	total DECIMAL(11, 2),
 	estado VARCHAR(20),
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS ingreso (
 	tipo_comprobante VARCHAR(20),
 	serie_comprobante VARCHAR(7),
 	num_comprobante VARCHAR(10),
-	fecha DATETIME,
+	fecha TIMESTAMP,
 	impuesto DECIMAL(4 ,2),
 	total DECIMAL(11, 2),
 	estado VARCHAR(20),
