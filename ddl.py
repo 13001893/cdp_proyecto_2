@@ -22,6 +22,41 @@ FOREIGN KEY (idcategoria)
             REFERENCES categoria(idcategoria)
 );
 
+CREATE TABLE IF NOT EXISTS rol (
+	idrol INT PRIMARY KEY,
+	nombre VARCHAR(30),
+	descripcion VARCHAR(255),
+	estado BIT
+);
+
+CREATE TABLE IF NOT EXISTS usuario (
+	idusuario INT PRIMARY KEY,
+	idrol INT,
+	nombre VARCHAR(100),
+	tipo_documento VARCHAR(20),
+	num_documento VARCHAR(20),
+	direccion VARCHAR(70),
+	telefono VARCHAR(20),
+	email VARCHAR(50),
+	clave VARBINARY(MAX),
+	estado BIT,
+
+CONSTRAINT fk_idrol
+FOREIGN KEY (idrol)
+            REFERENCES rol(idrol)
+);
+
+CREATE TABLE IF NOT EXISTS persona (
+	idpersona INT PRIMARY KEY,
+	tipo_persona VARCHAR(20),
+	nombre VARCHAR(100),
+	tipo_documento VARCHAR(20),
+	num_documento VARCHAR(20),
+	direccion VARCHAR(70),
+	telefono VARCHAR(20),
+	email VARCHAR(50)
+);
+
 CREATE TABLE IF NOT EXISTS venta (
 	idventa INT PRIMARY KEY,
 	idcliente INT,
@@ -43,34 +78,7 @@ FOREIGN KEY (idcliente)
             REFERENCES persona(idpersona)
 );
 
-CREATE TABLE IF NOT EXISTS persona (
-	idpersona INT PRIMARY KEY,
-	tipo_persona VARCHAR(20),
-	nombre VARCHAR(100),
-	tipo_documento VARCHAR(20),
-	num_documento VARCHAR(20),
-	direccion VARCHAR(70),
-	telefono VARCHAR(20),
-	email VARCHAR(50)
-);
-
-CREATE TABLE IF NOT EXIST detalle_ingreso(
-	iddetalle_ingreso INT PRIMARY KEY,
-	idingreso INT,
-	idarticulo INT,
-	cantidad INT,
-	precio DECIMAL(11, 2),
-
-	CONSTRAINT fk_idarticulo
-	FOREIGN KEY (idarticulo)
-	REFERENCES articulo(idarticulo),
-
-	CONSTRAINT fk_idingreso
-	FOREIGN KEY (idingreso)
-	REFERENCES ingreso(idingreso)
-);
-
-CREATE TABLE IF NOT EXIST ingreso (
+CREATE TABLE IF NOT EXISTS ingreso (
 	idingreso INT PRIMARY KEY,
 	idproveedor INT,
 	idusuario INT,
@@ -91,31 +99,23 @@ CREATE TABLE IF NOT EXIST ingreso (
 	REFERENCES usuario(idusuario)
 );
 
-CREATE TABLE IF NOT EXIST usuario (
-	idusuario INT PRIMARY KEY,
-	idrol INT,
-	nombre VARCHAR(100),
-	tipo_documento VARCHAR(20),
-	num_documento VARCHAR(20),
-	direccion VARCHAR(70),
-	telefono VARCHAR(20),
-	email VARCHAR(50),
-	clave VARBINARY(MAX),
-	estado BIT,
+CREATE TABLE IF NOT EXISTS detalle_ingreso(
+	iddetalle_ingreso INT PRIMARY KEY,
+	idingreso INT,
+	idarticulo INT,
+	cantidad INT,
+	precio DECIMAL(11, 2),
 
-CONSTRAINT fk_idrol
-FOREIGN KEY (idrol)
-            REFERENCES rol(idrol)
+	CONSTRAINT fk_idarticulo
+	FOREIGN KEY (idarticulo)
+	REFERENCES articulo(idarticulo),
+
+	CONSTRAINT fk_idingreso
+	FOREIGN KEY (idingreso)
+	REFERENCES ingreso(idingreso)
 );
 
-CREATE TABLE IF NOT EXISTS rol (
-	idrol INT PRIMARY KEY,
-	nombre VARCHAR(30),
-	descripcion VARCHAR(255),
-	estado BIT
-);
-
-CREATE TABLE IF NOT EXISTE detalle_venta(
+CREATE TABLE IF NOT EXISTS detalle_venta(
 	iddetalle_venta INT PRIMARY KEY,
 	idventa INT,
 	idarticulo INT,
